@@ -210,7 +210,10 @@ recursive_delete(Dir) ->
                     throw_error("delete file ~ts: ~ts\n", [Dir, Text])
             end;
         false ->
-            delete(Dir, regular)
+            case is_file(Dir) of
+                true  -> delete(Dir, regular);
+                false -> ok
+            end
     end.
 
 delete(File, Type) ->
